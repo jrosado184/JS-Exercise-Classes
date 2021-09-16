@@ -42,8 +42,27 @@ class Airplane {
 */
 
 class Person {
-  
+  constructor(name, age){
+    this.name = name;
+    this.age = age;
+    this.stomach = [];
+  }
+
+eat(someFood) {
+if(this.stomach.length < 10){
+  this.stomach.push(someFood)
 }
+}
+
+
+poop(someFood){
+  this.stomach.splice(someFood)
+}
+toString(){
+  return `${this.name}, ${this.age}`
+}
+}
+
 
 /*
   TASK 2
@@ -60,9 +79,27 @@ class Person {
 */
 
 class Car {
-  
+  constructor(model, milesPerGallon){
+    this.model = model;
+    this.milesPerGallon = milesPerGallon;
+    this.tank = 0;
+    this.odometer = 0;
+  }
+  fill(gallons){
+    this.tank = this.tank + gallons
+  }
+  drive(distance){
+  let driveCapacity = this.tank * this.milesPerGallon
+  if(distance <= driveCapacity){
+    this.odometer = this.odometer + distance;
+    this.tank = this.tank - (distance / this.milesPerGallon);
+  }else{
+    this.tank = 0;
+    this.odometer = this.odometer + driveCapacity;
+    return `I ran out of fuel at ${this.odometer}`;
 }
-
+}
+}
 /*
   TASK 3
     - Write a Lambdasian class.
@@ -76,7 +113,15 @@ class Car {
         + {name} and {location} of course come from the instance's own properties.
 */
 class Lambdasian {
-  
+  constructor(arg){
+  this.name = arg.name
+  this.age = arg.age
+  this.location = arg.location
+}
+speak(){
+  return `Hello my name is ${this.name}, I am from ${this.location}`
+}
+
 }
 
 /*
@@ -93,9 +138,23 @@ class Lambdasian {
         + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' where subject is the param passed in.
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
-class Instructor {
+class Instructor extends Lambdasian {
+  constructor(arg){
+    super(arg);
+    this.specialty = arg.specialty;
+    this.favLanguage = arg.favLanguage;
+    this.catchPhrase = arg.catchPhrase
+  }
+  demo(subject){
+    return `Today we are learning about ${subject}`
+  }
+  grade(student, subject){
+    return `${student.name} receives a perfect score on ${subject}`
+    }
+    
+  }
 
-}
+
 /*
   TASK 5
     - Write a Student class extending Lambdasian.
@@ -111,8 +170,23 @@ class Instructor {
         + `PRAssignment` a method that receives a subject as an argument and returns `student.name has submitted a PR for {subject}`
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
-class Student {
-   
+class Student extends Lambdasian {
+   constructor(arg){
+     super(arg);
+     this.previousBackground = arg.previousBackground;
+     this.className = arg.className;
+     this.favSubjects = arg.favSubjects;
+
+   }
+   listSubjects(){
+     return `${this.favSubjects}`
+   }
+   PRAssignment(subject){
+    return `${this.name} has submitted a PR for ${subject}`
+   }
+   sprintChallenge(subject){
+     return `${this.name} has begun sprint challenge on ${subject}`
+   }
 }
 
 /*
@@ -128,8 +202,18 @@ class Student {
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {
-   
+class ProjectManager extends Instructor {
+   constructor(arg){
+     super(arg)
+     this.gradClassName = arg.gradClassName;
+     this.favInstructor = arg.favInstructor
+   }
+   standUp(channel){
+        return `${this.name} announces to ${channel}, @channel standBy times!`
+   }
+   debugsCode(student, subject){
+     return `${this.name} debugs ${student.name}'s code on ${subject}`
+   }
 }
 /*
   STRETCH PROBLEM (no tests!)
